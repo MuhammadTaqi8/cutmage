@@ -1,370 +1,288 @@
-# Background Removal Microservice — Complete Operations Guide
+Background Removal API — Production Deployment Guide (AWS + FastAPI)
 
-## Project Structure
+High-performance background removal microservice built with FastAPI + rembg (ONNX Runtime).
 
-```
-bgremove/
-├── main.py                  # FastAPI application entry point
-├── app/
-│   ├── __init__.py
-│   ├── config.py            # Pydantic settings (env-driven)
-│   ├── logger.py            # Structured JSON logging (structlog)
-│   ├── model.py             # rembg singleton + warm-up
-│   ├── security.py          # Magic-byte, MIME, decompression-bomb guards
-│   └── processing.py        # In-memory inference pipeline
+Designed for:
+
+AWS EC2 (Ubuntu 22.04)
+
+Nginx reverse proxy
+
+systemd process management
+
+Production security hardening
+
+Project Structure
+backremove/
+├── main.py                  # FastAPI entry point
+├── app/                     # Modular app components
+│   ├── config.py
+│   ├── logger.py
+│   ├── model.py
+│   ├── security.py
+│   └── processing.py
 ├── requirements.txt
-├── gunicorn.conf.py         # Production Gunicorn tuning
-├── bgremove.service         # systemd unit file
-├── nginx.conf               # Nginx reverse proxy + TLS
-└── .env.example             # Environment variable template
-```
+├── bgremove.service         # systemd service
+├── nginx.conf               # Reverse proxy config
+├── .env.example
+├── README.md
+└── .gitignore
 
----
 
-## 1. VPS Deployment (Hetzner CX21 / DigitalOcean Basic — 2 vCPU, 4 GB RAM)
+⚠️ Not committed to Git:
 
-### 1.1 Server bootstrap
+venv/
 
-```bash
-# As root on a fresh Ubuntu 22.04 LTS
-apt update && apt upgrade -y
-apt install -y python3.11 python3.11-venv python3-pip nginx certbot python3-certbot-nginx \
-               build-essential libssl-dev git
+.env
 
-# Create a dedicated, unprivileged user
-useradd -m -s /bin/bash -d /opt/bgremove bgremove
-```
+*.pem
 
-### 1.2 Application setup
+__pycache__/
 
-```bash
-su - bgremove         # switch to service user
+1️⃣ Local Development
+Create virtual environment
+python -m venv venv
 
-# Clone / upload your code
-git clone https://github.com/yourorg/bgremove /opt/bgremove
-cd /opt/bgremove
 
-# Create virtualenv and install deps
-python3.11 -m venv venv
+Activate:
+
+Windows:
+
+venv\Scripts\activate
+
+
+Linux/macOS:
+
 source venv/bin/activate
-pip install --upgrade pip wheel
+
+
+Install dependencies:
+
 pip install -r requirements.txt
 
-# Pre-download model weights (avoids first-request cold start)
+
+Run dev server:
+
+uvicorn main:app --reload
+
+
+Open:
+
+http://127.0.0.1:8000/docs
+
+2️⃣ AWS EC2 Deployment (Ubuntu 22.04)
+2.1 Connect to server
+ssh -i your-key.pem ubuntu@YOUR_PUBLIC_IP
+
+2.2 Update system
+sudo apt update && sudo apt upgrade -y
+
+
+Install dependencies:
+
+sudo apt install python3-pip python3-venv nginx git -y
+
+2.3 Upload project
+
+From your local machine:
+
+scp -i your-key.pem -r backremove ubuntu@YOUR_PUBLIC_IP:/home/ubuntu/
+
+
+Then SSH again.
+
+2.4 Setup Python environment
+cd backremove
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
+Pre-download model:
+
 python3 -c "import rembg; rembg.new_session('u2net')"
-```
 
-### 1.3 Environment file
+3️⃣ Run in Production (Gunicorn)
 
-```bash
-# As root
-cp /opt/bgremove/.env.example /etc/bgremove.env
-chmod 600 /etc/bgremove.env
-chown bgremove:bgremove /etc/bgremove.env
+Install gunicorn:
 
-# Edit and set API_KEY, WEB_CONCURRENCY, etc.
-nano /etc/bgremove.env
-```
+pip install gunicorn
 
-### 1.4 systemd
 
-```bash
-cp /opt/bgremove/bgremove.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable --now bgremove
-systemctl status bgremove
-```
+Test:
 
-### 1.5 Nginx + HTTPS
+gunicorn -w 3 -k uvicorn.workers.UvicornWorker \
+    --bind 127.0.0.1:8000 main:app
 
-```bash
-# Point your DNS A record at the VPS IP first, then:
-cp /opt/bgremove/nginx.conf /etc/nginx/sites-available/bgremove
+4️⃣ Setup systemd (Auto Start on Boot)
 
-# Edit server_name in nginx.conf
-sed -i 's/api.example.com/your.actual.domain.com/g' \
-    /etc/nginx/sites-available/bgremove
+Copy service file:
 
-ln -s /etc/nginx/sites-available/bgremove /etc/nginx/sites-enabled/
-nginx -t
+sudo cp bgremove.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable bgremove
+sudo systemctl start bgremove
 
-# Obtain TLS certificate (auto-renews via systemd timer)
-certbot --nginx -d your.actual.domain.com
-systemctl reload nginx
-```
 
----
+Check status:
 
-## 2. Production Run Command
+sudo systemctl status bgremove
 
-```bash
-# Direct Gunicorn invocation (the systemd unit does this automatically)
-/opt/bgremove/venv/bin/gunicorn -c gunicorn.conf.py main:app
-```
+5️⃣ Nginx Reverse Proxy
 
-### Worker count guidance
+Copy nginx config:
 
-| vCPUs | RAM  | Recommended `WEB_CONCURRENCY` |
-|-------|------|-------------------------------|
-| 1     | 2 GB | 2                             |
-| 2     | 4 GB | 3–4                           |
-| 4     | 8 GB | 5–8                           |
+sudo cp nginx.conf /etc/nginx/sites-available/backremove
 
-Each worker holds one copy of the onnxruntime session in memory
-(≈ 180 MB for u2net). On 4 GB RAM with 4 workers, expect ≈ 1.5 GB
-model memory plus OS + app overhead.
 
----
+Edit domain:
 
-## 3. API Usage
+sudo nano /etc/nginx/sites-available/backremove
 
-### Remove background
 
-```bash
-# With API key
-curl -s -u ":your_api_key" \
-     -F "file=@photo.jpg" \
-     https://your.domain.com/v1/remove-background \
-     -o result.png
+Enable:
 
-# Without API key (when API_KEY is unset)
-curl -s -F "file=@photo.jpg" \
-     https://your.domain.com/v1/remove-background \
-     -o result.png
-```
+sudo ln -s /etc/nginx/sites-available/backremove /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
 
-### Health checks
+6️⃣ HTTPS (Let's Encrypt)
 
-```bash
-curl https://your.domain.com/health
-# {"status":"ok","uptime_seconds":42.1}
+After DNS A record points to your EC2 IP:
 
-curl https://your.domain.com/ready
-# {"ready":true,"model_loaded":true}
-```
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d yourdomain.com
 
-### HTTP status codes
 
-| Code | Meaning |
-|------|---------|
-| 200  | Success — body is a transparent PNG |
-| 400  | Bad image (wrong type, too large dimensions, magic bytes mismatch) |
-| 401  | Missing or invalid API key |
-| 413  | File too large (> MAX_FILE_SIZE) |
-| 429  | Rate limit exceeded |
-| 503  | Model not yet loaded (retry after a few seconds) |
-| 500  | Unexpected server error |
+Auto-renewal is handled by systemd timer.
 
----
+7️⃣ Security Checklist
 
-## 4. Benchmarking
+Infrastructure:
 
-### Prerequisites
+FastAPI bound to 127.0.0.1
 
-```bash
-# Install hey (Go-based load tester)
-go install github.com/rakyll/hey@latest
-# or: apt install hey  (some distros)
+Only ports 22, 80, 443 open
 
-# Or use wrk
-apt install wrk
+No public access to port 8000
 
-# Or Apache Bench
-apt install apache2-utils
-```
+Run under non-root user
 
-### Single-endpoint test
+systemd service protection enabled
 
-```bash
-# hey: 100 requests, 10 concurrent
+API Layer:
+
+API Key authentication
+
+File size limits
+
+Magic-byte validation
+
+Decompression bomb guard
+
+No disk writes (memory only)
+
+Rate limiting
+
+Headers:
+
+HSTS
+
+X-Frame-Options
+
+X-Content-Type-Options
+
+Cache-Control: no-store
+
+8️⃣ Performance Optimization
+Recommended EC2 instance
+
+Minimum:
+
+t3.medium (2 vCPU, 4GB RAM)
+
+Worker guideline
+vCPU	RAM	Workers
+1	2GB	2
+2	4GB	3–4
+4	8GB	5–8
+Faster Model Option
+
+In .env:
+
+REMBG_MODEL=u2netp
+
+
+Faster but slightly lower quality.
+
+9️⃣ API Usage
+Remove Background
+curl -F "file=@photo.jpg" \
+https://yourdomain.com/v1/remove-background \
+-o result.png
+
+
+With API key:
+
+curl -u ":YOUR_API_KEY" \
+-F "file=@photo.jpg" \
+https://yourdomain.com/v1/remove-background \
+-o result.png
+
+🔟 Health Checks
+GET /health
+GET /ready
+
+11️⃣ Monitoring & Logs
+
+View logs:
+
+journalctl -u bgremove -f
+
+12️⃣ Benchmarking
+
+Install hey:
+
+sudo apt install hey
+
+
+Run test:
+
 hey -n 100 -c 10 -m POST \
-    -H "Authorization: Basic $(echo -n ':apikey' | base64)" \
-    -F "file=@test.jpg" \
-    https://your.domain.com/v1/remove-background
+-F "file=@test.jpg" \
+https://yourdomain.com/v1/remove-background
 
-# wrk (multipart requires a pre-recorded body file)
-# 1. Capture a multipart body:
-curl -s -o /dev/null -D - -F "file=@test.jpg" http://127.0.0.1:8000/v1/remove-background \
-  --trace-ascii /tmp/trace.txt
+13️⃣ Zero-Downtime Restart
+sudo systemctl reload bgremove
 
-# ab: note ab doesn't handle multipart well; hey or wrk preferred
-```
+Versioning Strategy
 
-### Warm-up before benchmarking
+Endpoints are versioned:
 
-Always send 5–10 warm-up requests first so any JIT effects in onnxruntime
-are excluded from your numbers:
+/v1/remove-background
 
-```bash
-for i in {1..5}; do
-  curl -s -o /dev/null -F "file=@test.jpg" \
-       http://127.0.0.1:8000/v1/remove-background
-done
-```
 
----
+Future breaking changes → /v2/
 
-## 5. Performance Tuning — CPU-only VPS
+Important Security Note
 
-### 5.1 ONNX Runtime threading
+Never commit:
 
-By default, onnxruntime spawns threads equal to physical cores. On a
-shared VPS, cap it to avoid contention:
+.env
 
-```bash
-# Set before starting gunicorn
-export OMP_NUM_THREADS=2
-export OMP_WAIT_POLICY=PASSIVE
-export ONNXRUNTIME_INTRAOP_THREAD_AFFINITY="0,1"
-```
+.pem
 
-### 5.2 Use a faster model
+venv/
 
-rembg ships several models with different speed/quality trade-offs:
+If private key was exposed:
 
-| Model         | Quality | Speed (CPU) | RAM    |
-|---------------|---------|-------------|--------|
-| `u2net`       | Best    | Slow        | 175 MB |
-| `u2netp`      | Good    | 3× faster   | 4 MB   |
-| `isnet-general-use` | Excellent | Moderate | 180 MB |
-| `birefnet-lite` | Great | Fast        | 50 MB  |
+Delete EC2 keypair
 
-Set `REMBG_MODEL=u2netp` in `/etc/bgremove.env` for latency-sensitive
-deployments.
+Create new key
 
-### 5.3 PNG encoding
+Restart instance access
 
-Setting `compress_level=1` in `processing.py` makes PNG encoding ~5×
-faster than the default (level 6) at the cost of ~20% larger files.
-For API use-cases this is almost always the right trade-off.
+License
 
-### 5.4 Input resizing (optional)
-
-If your use-case tolerates it, resize inputs to ≤ 1024 px on the long
-edge before inference — this is the single biggest speed lever:
-
-```python
-# Add to process_image_bytes() before rembg.remove()
-MAX_SIDE = 1024
-if max(input_image.size) > MAX_SIDE:
-    input_image.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
-```
-
-### 5.5 OS-level tuning
-
-```bash
-# /etc/sysctl.conf
-net.core.somaxconn = 65535
-net.ipv4.tcp_tw_reuse = 1
-net.ipv4.ip_local_port_range = 1024 65535
-
-# Apply
-sysctl -p
-```
-
-### 5.6 Memory swap
-
-On 4 GB RAM with large images, add a 2 GB swapfile as a safety net:
-
-```bash
-fallocate -l 2G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-echo '/swapfile none swap sw 0 0' >> /etc/fstab
-```
-
----
-
-## 6. Security Hardening Checklist
-
-```
-Infrastructure
-  [x] Nginx terminates TLS (Let's Encrypt — auto-renewal via certbot.timer)
-  [x] FastAPI bound to 127.0.0.1 only (not publicly reachable)
-  [x] Dedicated unprivileged OS user (bgremove)
-  [x] systemd ProtectSystem=strict, NoNewPrivileges=true
-  [x] UFW / iptables: only ports 22, 80, 443 open
-
-API layer
-  [x] API key (Basic Auth) — set API_KEY in /etc/bgremove.env
-  [x] Rate limiting: slowapi (app) + limit_req_zone (Nginx)
-  [x] File size cap: MAX_FILE_SIZE (default 10 MB)
-  [x] Magic-byte validation (not just MIME or extension)
-  [x] Decompression-bomb guard: MAX_MEGAPIXELS + PIL header-only read
-  [x] Maximum resolution check (MAX_IMAGE_WIDTH × MAX_IMAGE_HEIGHT)
-  [x] No disk writes — all processing in memory
-  [x] No directory traversal — no file system paths involved
-  [x] Request timeout: Gunicorn worker_timeout + Nginx proxy_read_timeout
-  [x] Structured JSON logs for SIEM ingestion
-
-Headers
-  [x] Strict-Transport-Security (HSTS)
-  [x] X-Content-Type-Options: nosniff
-  [x] X-Frame-Options: DENY
-  [x] Cache-Control: no-store on responses
-
-To do manually
-  [ ] Enable fail2ban for repeated 401/429 responses
-  [ ] Set up unattended-upgrades for security patches
-  [ ] Configure logrotate for /var/log/nginx/bgremove_*.log
-  [ ] Monitor with Prometheus / Grafana (add prometheus-fastapi-instrumentator)
-  [ ] Set up uptime monitoring (BetterStack / UptimeRobot)
-```
-
----
-
-## 7. Reliability & Operations
-
-### Graceful restart (zero-downtime deploy)
-
-```bash
-# Signal Gunicorn master to reload workers one-by-one
-systemctl kill -s HUP bgremove
-
-# Or by PID
-kill -HUP $(cat /run/bgremove.pid)
-```
-
-### Log tailing
-
-```bash
-journalctl -u bgremove -f --output=json | jq .
-```
-
-### Model cache location
-
-rembg downloads model weights to `~/.u2net` (i.e., `/opt/bgremove/.u2net`
-for the bgremove user). Pre-download and commit to a known path to avoid
-any first-start delay:
-
-```bash
-su -s /bin/bash bgremove -c \
-  "python3 -c \"import rembg; rembg.new_session('u2net')\""
-```
-
-### Memory limits
-
-Add to `bgremove.service` if you want hard memory protection on a shared VPS:
-
-```ini
-[Service]
-MemoryMax=3G
-MemorySwapMax=1G
-```
-
-### Automatic certificate renewal
-
-Certbot installs a systemd timer automatically. Verify:
-
-```bash
-systemctl list-timers | grep certbot
-```
-
----
-
-## 8. Changelog / Versioning
-
-The `/v1/` prefix in the endpoint URL follows API versioning best practice.
-Future breaking changes → `/v2/remove-background`, old version kept alive
-for a deprecation window.
+Private project — internal use only.
