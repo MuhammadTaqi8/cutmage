@@ -1,0 +1,64 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.env
+.env.*
+.venv/
+
+# Python build files
+build/
+dist/
+*.egg-info/
+
+# =========================
+# Environment & Secrets
+# =========================
+.env
+.env.local
+.env.production
+
+# AWS / Private Keys
+*.pem
+*.key
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VS Code / IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Testing
+# =========================
+.coverage
+.pytest_cache/
+
+# =========================
+# Cache
+# =========================
+.cache/
+
+# =========================
+# Zip / Temp
+# =========================
+*.zip
+*.tar
+*.gz

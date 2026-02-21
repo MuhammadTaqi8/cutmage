@@ -1,0 +1,26 @@
+# Core framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+gunicorn==22.0.0
+
+# Image handling
+Pillow==10.3.0
+numpy==1.26.4
+
+# Rate limiting / config / logging
+slowapi==0.1.9
+pydantic==2.7.1
+pydantic-settings==2.2.1
+structlog==24.1.0
+
+# Async server extras
+httptools==0.6.1
+
+# Backend: InSPyReNet (default)
+transparent-background>=1.2.4
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Backend: U2Net fallback
+rembg==2.0.56
+onnxruntime==1.18.0

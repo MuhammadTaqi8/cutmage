@@ -1,0 +1,12 @@
+# robots.txt for cutmage.com
+# https://cutmage.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Block crawling of API endpoint (not useful for Google)
+Disallow: /v1/
+Disallow: /api/
+
+# Sitemap location — submit this URL in Google Search Console too
+Sitemap: https://cutmage.com/sitemap.xml

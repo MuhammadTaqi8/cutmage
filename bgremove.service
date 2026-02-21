@@ -1,0 +1,67 @@
+# /etc/systemd/system/backremove.service
+#
+# Deploy:
+#   sudo cp bgremove.service /etc/systemd/system/backremove.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now backremove
+#   sudo systemctl status backremove
+#
+# Logs:
+#   journalctl -u backremove -f
+
+[Unit]
+Description=Cutmage Background Removal API (FastAPI + InSPyReNet)
+After=network.target
+Wants=network.target
+
+[Service]
+# ── Identity ──────────────────────────────────────────────────────────────────
+User=ubuntu
+Group=ubuntu
+
+# ── Working directory & virtualenv ────────────────────────────────────────────
+WorkingDirectory=/home/ubuntu/backremove
+Environment="PATH=/home/ubuntu/backremove/venv/bin"
+
+# ── Environment ───────────────────────────────────────────────────────────────
+EnvironmentFile=-/home/ubuntu/backremove/.env
+Environment="BG_MODEL_BACKEND=inspyrenet"
+Environment="INSPYRENET_INPUT_SIZE=1024"
+Environment="LOG_LEVEL=info"
+
+# ── CRITICAL: 1 worker only ───────────────────────────────────────────────────
+# InSPyReNet loads ~700 MB of weights per worker.
+# 2 workers = 1.4 GB RAM + frequent OOM on a t2.small/t2.medium.
+# 1 worker processes requests sequentially — correct for this model.
+ExecStart=/home/ubuntu/backremove/venv/bin/uvicorn main:app \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 1 \
+    --timeout-keep-alive 5 \
+    --log-level warning \
+    --no-access-log
+
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGTERM
+
+# ── Startup timeout: model takes ~30s to load on cold start ──────────────────
+TimeoutStartSec=120
+TimeoutStopSec=30
+
+# ── Restart policy ────────────────────────────────────────────────────────────
+Restart=on-failure
+RestartSec=10
+StartLimitIntervalSec=120
+StartLimitBurst=3
+
+# ── Filesystem access needed by InSPyReNet + HuggingFace cache ───────────────
+ReadWritePaths=/home/ubuntu /tmp /root
+
+# ── Resource limits ───────────────────────────────────────────────────────────
+LimitNOFILE=65536
+# Uncomment on a small instance to avoid OOM killing unrelated processes:
+# OOMScoreAdjust=500
+
+[Install]
+WantedBy=multi-user.target
