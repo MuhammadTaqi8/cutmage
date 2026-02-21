@@ -59,7 +59,7 @@
       "@type":"FAQPage",
       "mainEntity":[
         {"@type":"Question","name":"Is Cutmage completely free with no watermarks?","acceptedAnswer":{"@type":"Answer","text":"Yes. Cutmage is 100% free with no watermarks, no sign-up, and no usage limits. You can remove backgrounds from as many images as you want at no cost."}},
-        {"@type":"Question","name":"What image formats does Cutmage support?","acceptedAnswer":{"@type":"Answer","text":"Cutmage accepts JPEG, PNG, WebP, HEIC, AVIF, BMP, TIFF, and GIF images up to 10 MB. Output is a full-resolution transparent PNG or JPEG."}},
+        {"@type":"Question","name":"What image formats does Cutmage support?","acceptedAnswer":{"@type":"Answer","text":"Cutmage accepts JPEG, PNG, and WebP images up to 10 MB. Output is a full-resolution transparent PNG or JPEG."}},
         {"@type":"Question","name":"Can I replace the background after removing it?","acceptedAnswer":{"@type":"Answer","text":"Yes. After AI background removal, you can set a solid color, choose from gradient presets, or upload your own photo as a new background. Everything is composited in your browser instantly."}},
         {"@type":"Question","name":"Are my images stored on Cutmage servers?","acceptedAnswer":{"@type":"Answer","text":"No. Your images are processed in real-time and never stored. All background compositing happens locally in your browser — Cutmage never sees your final image."}},
         {"@type":"Question","name":"Does Cutmage work on product photos and portraits?","acceptedAnswer":{"@type":"Answer","text":"Yes. Cutmage's AI background remover works on portraits, product photography, pets, food, fashion apparel, and more. It handles complex edges including hair and fur."}},
@@ -184,10 +184,11 @@ h1 .em{font-style:italic;color:var(--blue)}
 @keyframes shim{to{transform:translateX(100%)}}
 .btn-ghost{padding:13px 16px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
 .btn-ghost:hover{border-color:var(--ink);color:var(--ink)}
-/* Progress bar — JS-driven width, no CSS animation needed */
 .prog-wrap{height:3px;background:var(--border);display:none}
 .prog-wrap.on{display:block}
-.prog-bar{height:100%;width:0%;background:var(--blue);transition:width .25s ease}
+.prog-bar{height:100%;width:40%;background:linear-gradient(90deg,var(--blue),#93c5fd,var(--blue));background-size:200%;animation:ps 1.6s linear infinite,pm 1.3s ease-in-out infinite}
+@keyframes ps{to{background-position:200% 0}}
+@keyframes pm{0%{transform:translateX(-150%)}100%{transform:translateX(400%)}}
 
 /* ─── PROCESSING ─── */
 #proc{display:none;max-width:880px;margin:0 auto;padding:0 24px}
@@ -402,10 +403,15 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
 <header class="hero" itemscope itemtype="https://schema.org/WebPage">
   <div class="hero-in">
     <div class="hero-chip"><span class="cdot" aria-hidden="true"></span>AI-Powered · Instant · 100% Free</div>
+
+    <!-- SINGLE H1 — matches title tag exactly, primary keyword in first 4 words -->
     <h1 itemprop="name">Free AI Background Remover<br>&amp; <span class="em">Background Changer</span> Online</h1>
+
+    <!-- Keyword-dense opening paragraph — first 150 words seen by Google -->
     <p class="hero-sub" itemprop="description">
-      Cutmage is a free AI background remover that lets you <strong>remove background from any image</strong> online in seconds — no sign-up, no watermark, no limits. Upload any photo format including JPEG, PNG, WebP, HEIC and more, and our AI instantly cuts out the subject with pixel-perfect precision. Then <strong>change the photo background</strong> to any solid color, gradient, or your own image — all in one click.
+      Cutmage is a free AI background remover that lets you <strong>remove background from any image</strong> online in seconds — no sign-up, no watermark, no limits. Upload a portrait, product photo, pet picture, or any JPEG, PNG, or WebP file, and our AI instantly cuts out the subject with pixel-perfect precision. Then <strong>change the photo background</strong> to any solid color, gradient, or your own image — all in one click. Download your transparent PNG or JPEG at full resolution, free forever.
     </p>
+
     <div class="trust" aria-label="Key benefits">
       <span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>100% Free — Always</span>
       <span class="ts" aria-hidden="true"></span>
@@ -413,7 +419,7 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
       <span class="ts" aria-hidden="true"></span>
       <span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>No sign-up needed</span>
       <span class="ts" aria-hidden="true"></span>
-      <span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>All image formats</span>
+      <span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Full resolution output</span>
       <span class="ts" aria-hidden="true"></span>
       <span class="ti"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Images never stored</span>
     </div>
@@ -429,22 +435,22 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
 
 <!-- ═══ UPLOAD TOOL ═══ -->
 <main id="tool" class="tool-wrap" aria-labelledby="tool-heading">
+  <!-- H2 gives Google a clean keyword anchor for this section -->
   <h2 id="tool-heading" style="text-align:center;font-family:var(--serif);font-size:clamp(24px,3.5vw,38px);font-weight:700;letter-spacing:-.03em;color:var(--ink);margin-bottom:20px;line-height:1.1">Remove Background from Any Image — Free &amp; Instant</h2>
-  <p style="text-align:center;font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto">Upload any image format — JPEG, PNG, WebP, HEIC, AVIF, BMP, TIFF and more. Cutmage's AI removes the background in seconds. Download a transparent PNG or replace the background — all free, no sign-up.</p>
+  <p style="text-align:center;font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto">Upload a JPEG, PNG, or WebP file. Cutmage's AI background remover cuts out the subject in seconds, then lets you download a transparent PNG or replace the background — all free, no sign-up.</p>
   <div class="tool-card">
     <div class="drop-zone" id="dz" role="button" aria-label="Upload an image to remove its background">
-      <!-- accept="image/*" accepts every image type the browser can decode, including HEIC on Safari -->
-      <input type="file" id="fi" accept="image/*" aria-label="Choose image file to remove background"/>
+      <input type="file" id="fi" accept="image/jpeg,image/png,image/webp" aria-label="Choose image file to remove background"/>
       <div class="up-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       </div>
       <div class="dz-h">Drop your image here to remove background</div>
       <div class="dz-s">or <strong>click to browse</strong> — Ctrl+V paste from clipboard works too</div>
       <div class="fmt-chips">
-        <span class="fc">JPEG</span><span class="fc">PNG</span><span class="fc">WebP</span><span class="fc">HEIC</span><span class="fc">AVIF</span><span class="fc">BMP</span><span class="fc">TIFF</span><span class="fc">GIF</span><span class="fc">Up to 10 MB</span>
+        <span class="fc">JPEG</span><span class="fc">PNG</span><span class="fc">WebP</span><span class="fc">Up to 10 MB</span><span class="fc">No sign-up</span>
       </div>
     </div>
-    <div class="prog-wrap" id="prog-wrap"><div class="prog-bar" id="prog-bar"></div></div>
+    <div class="prog-wrap" id="prog-wrap"><div class="prog-bar"></div></div>
     <div class="tool-foot">
       <button class="btn-main" id="btn-go" disabled aria-label="Remove background from image">✂&nbsp;&nbsp;Remove Background — Free</button>
       <button class="btn-ghost" id="btn-clear" style="display:none" aria-label="Clear selected image">Clear</button>
@@ -465,7 +471,7 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
   <div class="proc-card">
     <div class="proc-spin" aria-hidden="true"></div>
     <div class="proc-h">Removing background…</div>
-    <div class="proc-s" id="proc-sub">AI is precisely tracing your subject</div>
+    <div class="proc-s">AI is precisely tracing your subject</div>
     <div class="proc-pills">
       <div class="pp" id="pp1">🔍 Detecting subject</div>
       <div class="pp" id="pp2">✂️ Removing background</div>
@@ -528,7 +534,7 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
       <div class="panel" id="pane-compare">
         <div class="ph"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="9" height="18" rx="1"/><rect x="13" y="3" width="9" height="18" rx="1"/></svg>Before &amp; After</div>
         <div class="pb">
-          <p style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6">Drag the slider to compare. Happy? Download below or add a background.</p>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6">Drag the slider on the left to compare before and after. Happy? Download below — or add a background.</p>
           <table class="meta-tbl" aria-label="File information">
             <tr><td>File</td><td id="m-name">—</td></tr>
             <tr><td>Original</td><td id="m-size">—</td></tr>
@@ -551,15 +557,21 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
       <div class="panel" id="pane-bg">
         <div class="ph"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>Background Editor</div>
         <div class="pb">
+
+          <!-- Live mini preview -->
           <div class="live-prev" id="live-prev">
             <canvas id="prev-canvas" height="68" style="height:68px;width:auto;max-width:100%"></canvas>
             <span class="live-prev-label">Preview</span>
           </div>
+
+          <!-- Type tabs: Color / Gradient / Image -->
           <div class="bg-type-tabs" role="tablist" aria-label="Background type">
             <button class="btt active" id="btt-color" role="tab" aria-selected="true" aria-controls="btp-color">Color</button>
             <button class="btt" id="btt-grad" role="tab" aria-selected="false" aria-controls="btp-grad">Gradient</button>
             <button class="btt" id="btt-img" role="tab" aria-selected="false" aria-controls="btp-img">Image</button>
           </div>
+
+          <!-- Color pane -->
           <div id="btp-color" role="tabpanel">
             <div class="color-grid" id="color-grid" aria-label="Color swatches"></div>
             <div class="custom-color-row">
@@ -568,9 +580,13 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
               <span id="cpick-hex">#2563eb</span>
             </div>
           </div>
+
+          <!-- Gradient pane -->
           <div id="btp-grad" role="tabpanel" style="display:none">
             <div class="grad-grid" id="grad-grid" aria-label="Gradient presets"></div>
           </div>
+
+          <!-- Image pane -->
           <div id="btp-img" role="tabpanel" style="display:none">
             <div class="img-drop" id="img-drop">
               <input type="file" id="bg-fi" accept="image/*" aria-label="Upload background image"/>
@@ -579,6 +595,8 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
             </div>
             <img id="bg-thumb" class="img-preview-thumb" alt="Background image preview"/>
           </div>
+
+          <!-- Apply button -->
           <button class="btn-dl primary" id="btn-apply-bg" style="margin-top:12px;width:100%">
             Apply &amp; Preview →
           </button>
@@ -612,7 +630,7 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
 <section style="max-width:760px;margin:0 auto;padding:52px 24px 0;text-align:center" aria-hidden="false">
   <h2 style="font-family:var(--serif);font-size:clamp(24px,3.5vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--ink);margin-bottom:16px;line-height:1.1">Remove Backgrounds from Portraits, Products &amp; Pets Online</h2>
   <p style="font-size:15px;color:var(--muted);line-height:1.75;max-width:640px;margin:0 auto">
-    Cutmage is a free <strong>online background remover</strong> powered by AI. Whether you need a <strong>transparent background PNG</strong> for product photography, a clean headshot cutout for LinkedIn, or a fur-perfect pet portrait for social media — Cutmage handles it with no watermark and no sign-up. Supports every image format including JPEG, PNG, WebP, HEIC, AVIF, BMP, TIFF and GIF. After the AI removes the background, our browser-based <strong>background changer</strong> lets you instantly replace it with a solid color, a gradient, or any photo you upload. <strong>Download your edited image at full resolution</strong> — completely free.
+    Cutmage is a free <strong>online background remover</strong> powered by AI. Whether you need a <strong>transparent background PNG</strong> for product photography, a clean headshot cutout for LinkedIn, or a fur-perfect pet portrait for social media — Cutmage handles it with no watermark and no sign-up. After the AI removes the background, our browser-based <strong>background changer</strong> lets you instantly replace it with a solid color, a gradient, or any photo you upload. <strong>Download your edited image at full resolution</strong> — completely free. No Photoshop, no design skills, no hidden fees.
   </p>
 </section>
 
@@ -627,7 +645,7 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
     <article class="how-card">
       <div class="hn" aria-hidden="true">1</div>
       <h3 class="ht">Upload your image</h3>
-      <p class="hd">Drag &amp; drop, click to browse, or Ctrl+V paste directly from your clipboard. Supports every image format — JPEG, PNG, WebP, HEIC, AVIF, BMP, TIFF, GIF and more, up to 10 MB. No sign-up required.</p>
+      <p class="hd">Drag &amp; drop, click to browse, or Ctrl+V paste directly from your clipboard. Supports JPEG, PNG, and WebP up to 10 MB. No sign-up required.</p>
     </article>
     <article class="how-card">
       <div class="hn" aria-hidden="true">2</div>
@@ -649,6 +667,8 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
     <h2 class="st" id="feat-title">Why Use Cutmage Instead of Other Background Removers?</h2>
     <p class="ss" style="max-width:560px">Cutmage's free online background remover gives you more than just a cut-out — it's a full background editor with zero cost and zero sign-up.</p>
   </div>
+
+  <!-- Comparison table — high E-E-A-T signal, easy to skim, great for featured snippets -->
   <div style="max-width:680px;margin:0 auto 48px;overflow-x:auto">
     <table style="width:100%;border-collapse:collapse;font-size:14px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh1)">
       <thead>
@@ -662,18 +682,19 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
         <tr><td style="padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)">Price</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700">Free forever</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted)">$3–$15/month</td></tr>
         <tr style="background:var(--bg2)"><td style="padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)">Account required</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700">No</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted)">Usually yes</td></tr>
         <tr><td style="padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)">Watermark on output</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700">Never</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted)">Free tiers often do</td></tr>
-        <tr style="background:var(--bg2)"><td style="padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)">Supported formats</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700">All formats incl. HEIC</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted)">JPEG &amp; PNG only</td></tr>
+        <tr style="background:var(--bg2)"><td style="padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)">Background editor built in</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700">Yes — color, gradient, image</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted)">Separate paid feature</td></tr>
         <tr><td style="padding:11px 16px;border-bottom:1px solid var(--border);color:var(--ink2)">Images stored on server</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--green);font-weight:700">Never</td><td style="padding:11px 16px;text-align:center;border-bottom:1px solid var(--border);color:var(--muted)">Often yes</td></tr>
         <tr style="background:var(--bg2)"><td style="padding:11px 16px;color:var(--ink2)">Output resolution</td><td style="padding:11px 16px;text-align:center;color:var(--green);font-weight:700">Full original resolution</td><td style="padding:11px 16px;text-align:center;color:var(--muted)">Downscaled on free tier</td></tr>
       </tbody>
     </table>
   </div>
+
   <div class="feat-grid">
     <article class="fc-card"><span class="fci" aria-hidden="true">⚡</span><h3 class="fct">Remove background in seconds</h3><p class="fcd">Cutmage's AI background remover processes most images in under 5 seconds — what used to take 15 minutes in Photoshop.</p></article>
     <article class="fc-card"><span class="fci" aria-hidden="true">🎨</span><h3 class="fct">Built-in background changer</h3><p class="fcd">After removal, swap to any solid color, choose from gradient presets, or upload your own background photo — all without leaving the page.</p></article>
     <article class="fc-card"><span class="fci" aria-hidden="true">✂️</span><h3 class="fct">Hair, fur &amp; fine edge accuracy</h3><p class="fcd">The AI correctly handles curly hair, pet fur, and semi-transparent edges that other background removers struggle with.</p></article>
     <article class="fc-card"><span class="fci" aria-hidden="true">🔒</span><h3 class="fct">Browser-based, 100% private</h3><p class="fcd">Background compositing runs entirely in your browser. Your images are never stored, never shared, never seen after processing.</p></article>
-    <article class="fc-card"><span class="fci" aria-hidden="true">🖼️</span><h3 class="fct">Every image format supported</h3><p class="fcd">Upload JPEG, PNG, WebP, HEIC, AVIF, BMP, TIFF, GIF — any format your browser can read. Output is always a clean, full-resolution PNG.</p></article>
+    <article class="fc-card"><span class="fci" aria-hidden="true">🖼️</span><h3 class="fct">Full-resolution transparent PNG</h3><p class="fcd">Download a transparent background PNG or JPEG at your original image size — no downscaling, no compression, no quality loss.</p></article>
     <article class="fc-card"><span class="fci" aria-hidden="true">💸</span><h3 class="fct">Free online background remover</h3><p class="fcd">No account, no subscription, no credits, no watermarks. Cutmage is a free background remover with unlimited use — today and always.</p></article>
   </div>
 </section>
@@ -683,39 +704,46 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
   <div class="sh">
     <div class="ey">Use Cases</div>
     <h2 class="st" id="usecases-title">Remove Background from Any Type of Photo</h2>
-    <p class="ss" style="max-width:520px">Cutmage's AI background remover works across every category of image.</p>
+    <p class="ss" style="max-width:520px">Cutmage's AI background remover works across every category of image. Here's how people use it every day.</p>
   </div>
   <div class="how-grid" style="max-width:960px">
+
     <article class="how-card">
       <div class="hn" aria-hidden="true">🛍️</div>
       <h3 class="ht">Product Photos for E-Commerce</h3>
-      <p class="hd">Remove background from product images for <strong>Amazon, eBay, Etsy, and Shopify</strong> listings. Get clean white or transparent backgrounds that meet marketplace guidelines — in seconds, not hours.</p>
+      <p class="hd">Remove background from product images for <strong>Amazon, eBay, Etsy, and Shopify</strong> listings. Get clean white or transparent backgrounds that meet marketplace guidelines — in seconds, not hours. No studio required.</p>
     </article>
+
     <article class="how-card">
       <div class="hn" aria-hidden="true">🤳</div>
       <h3 class="ht">Profile Pictures &amp; Social Media</h3>
       <p class="hd">Cut out your portrait and place it on a professional solid color or gradient background for <strong>LinkedIn, Instagram, or Twitter</strong>. Perfect profile photos without booking a photographer.</p>
     </article>
+
     <article class="how-card">
       <div class="hn" aria-hidden="true">📣</div>
       <h3 class="ht">Marketing, Ads &amp; Thumbnails</h3>
       <p class="hd">Isolate products or people and composite them onto branded backgrounds for <strong>ads, banners, YouTube thumbnails, and social posts</strong>. Faster than any design tool, free with no watermark.</p>
     </article>
+
     <article class="how-card">
       <div class="hn" aria-hidden="true">🐾</div>
       <h3 class="ht">Pet &amp; Animal Photos</h3>
-      <p class="hd">Cutmage excels at removing backgrounds from <strong>pet photos</strong>, handling complex fur and fine hair that most background removers clip incorrectly.</p>
+      <p class="hd">Cutmage excels at removing backgrounds from <strong>pet photos</strong>, handling complex fur and fine hair that most background removers clip incorrectly. Upload your cat or dog photo and get a perfect cut-out.</p>
     </article>
+
     <article class="how-card">
       <div class="hn" aria-hidden="true">👗</div>
       <h3 class="ht">Fashion &amp; Apparel</h3>
-      <p class="hd">Create clean, consistent product shots for <strong>clothing, shoes, and accessories</strong>. Replace busy backgrounds with white or your brand color to keep your store looking sharp.</p>
+      <p class="hd">Create clean, consistent product shots for <strong>clothing, shoes, and accessories</strong>. Replace busy backgrounds with white or your brand color to keep your store looking sharp and professional.</p>
     </article>
+
     <article class="how-card">
       <div class="hn" aria-hidden="true">🎓</div>
       <h3 class="ht">Passports, IDs &amp; Documents</h3>
       <p class="hd">Quickly generate a <strong>plain white or light blue background</strong> for passport-style portrait photos, ID cards, and official documents without visiting a photo shop.</p>
     </article>
+
   </div>
 </section>
 
@@ -726,34 +754,77 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
       <div class="ey">FAQ</div>
       <h2 class="st" id="faq-title" style="font-size:clamp(26px,4vw,40px)">Frequently Asked Questions about Cutmage Background Remover</h2>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">Is Cutmage really free with no watermarks?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">Yes, completely. Cutmage is a 100% free online background remover with no watermarks, no sign-up required, and no usage limits. You can remove backgrounds from as many images as you want, download them at full resolution, and use them commercially — all at zero cost.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">Is Cutmage really free with no watermarks?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Yes, completely. Cutmage is a 100% free online background remover with no watermarks, no sign-up required, and no usage limits. You can remove backgrounds from as many images as you want, download them at full resolution, and use them commercially — all at zero cost.</p>
+      </div>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">What image formats can I upload?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">Cutmage accepts every image format your browser can read — including JPEG, PNG, WebP, HEIC (iPhone photos), AVIF, BMP, TIFF, and GIF — up to 10 MB. Output is always a full-resolution transparent PNG or JPEG.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">What image formats can I upload to remove the background?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Cutmage's background remover accepts JPEG, PNG, and WebP images up to 10 MB. Output is always a full-resolution transparent PNG (which preserves the transparent background) or a JPEG if you choose to add a solid background color.</p>
+      </div>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">How do I change the photo background after removing it?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">After the AI removes the background, click the "② Background" tab in the sidebar. Choose from solid colors, gradient presets, or upload your own photo as a new background. Click "Apply &amp; Preview" to see the result, then download as PNG or JPEG.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">How do I change the photo background after removing it?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">After the AI removes the background, click the "② Background" tab in the sidebar. Choose from solid colors (including white, black, or a custom hex color), gradient presets like ocean or sunset, or upload your own photo as a new background. Click "Apply &amp; Preview" to see the result, then download your finished image as PNG or JPEG. The background compositing happens entirely in your browser — no additional upload needed.</p>
+      </div>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">How long does AI background removal take?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">Most images are processed in under 5 seconds. Cutmage's AI is optimised for speed without sacrificing edge quality.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">How long does AI background removal take?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Most images are processed in under 5 seconds. Cutmage's AI background remover is optimised for speed without sacrificing edge quality — handling hair, fur, and fine details accurately in the same time other tools take just to upload your file.</p>
+      </div>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">Are my images stored on Cutmage's servers?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">No. Your image is sent to the AI model for background removal, the result is returned to your browser immediately, and nothing is stored after that. All background editing happens entirely in your browser.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">Are my images stored on Cutmage's servers?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">No. Your image is sent to the AI model for background removal, the result is returned to your browser immediately, and nothing is stored or logged after that. All background editing — changing color, gradient, or adding a new image — happens entirely in your browser. Cutmage never sees your final edited image.</p>
+      </div>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">Does Cutmage work for e-commerce product photos?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">Absolutely. Cutmage is widely used to create marketplace-ready product images for Amazon, eBay, Etsy, and Shopify — clean white or transparent backgrounds in seconds, completely free, with no watermark.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">Does Cutmage work for e-commerce product photos?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Absolutely. Cutmage is widely used to create marketplace-ready product images for Amazon, eBay, Etsy, and Shopify. Remove the original background and replace it with a clean white background that meets platform requirements — in seconds, completely free, with no watermark on the output.</p>
+      </div>
     </div>
+
     <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-      <button class="faq-q" aria-expanded="false"><h3 itemprop="name" style="font:inherit;margin:0">Can I use the results commercially?</h3><span class="faq-ic" aria-hidden="true">+</span></button>
-      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text">Yes. You own your original images and the processed output. Cutmage places no restrictions on commercial use — e-commerce, advertising, social media, print design. No attribution required.</p></div>
+      <button class="faq-q" aria-expanded="false">
+        <h3 itemprop="name" style="font:inherit;margin:0">Can I use the background-removed images commercially?</h3>
+        <span class="faq-ic" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <p itemprop="text">Yes. You own your original images and the processed output. Cutmage places no restrictions on how you use results — e-commerce listings, paid advertising, social media, print design, or any other commercial project. No attribution or licence required.</p>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -774,7 +845,7 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
   </div>
   <div style="font-size:12px;color:var(--muted);text-align:center">
     © 2025 Cutmage · The free online background remover with no watermarks<br>
-    <span style="color:var(--muted2)">Supports all image formats — JPEG, PNG, WebP, HEIC, AVIF &amp; more</span>
+    <span style="color:var(--muted2)">Supports portraits, products, pets, fashion &amp; more</span>
   </div>
   <div class="flinks">
     <a href="/privacy">Privacy Policy</a>
@@ -787,25 +858,80 @@ footer{padding:28px 28px;border-top:1px solid var(--border);display:flex;align-i
 <div id="toast" role="status" aria-live="polite"><span class="tdot" aria-hidden="true"></span><span id="toast-txt"></span></div>
 
 <script>
-'use strict';
 // ═══════════════════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════════════════
-const API_BASE = 'https://api.cutmage.com';
-// const API_BASE = 'http://127.0.0.1:8000';
+// const API_BASE = 'https://api.cutmage.com';
+const API_BASE = 'http://127.0.0.1:8000';
 const API_KEY  = '';
 
 // ═══════════════════════════════════════════════════════
-// ACCEPTED IMAGE TYPES
-// All types the browser's <img> / Canvas can decode.
-// HEIC is natively decoded on Safari/iOS; other browsers
-// may not decode it into a canvas but the FILE IS STILL
-// SENT to the server — the server-side Pillow handles it.
-// We accept everything and let the server reject truly
-// unreadable files via its own validation.
+// DEMO GALLERY — canvas drawn, no external images
 // ═══════════════════════════════════════════════════════
-const ACCEPTED_MIME_PREFIXES = ['image/'];   // accept all image/* types
-const MAX_FILE_BYTES = 10 * 1024 * 1024;     // 10 MB
+const DEMOS = [
+  { label:'Portrait',    emoji:'👩‍💼', before:'#d6e8d0', after:'#eff4ff' },
+  { label:'Product',     emoji:'👟',   before:'#e8ddd0', after:'#f0fff4' },
+  { label:'Pet',         emoji:'🐕',   before:'#d0d8e8', after:'#fff8f0' },
+  { label:'Food',        emoji:'🍓',   before:'#e8d0d6', after:'#fefce8' },
+  { label:'E-commerce',  emoji:'👜',   before:'#ddd0e8', after:'#f0fffe' },
+  { label:'Fashion',     emoji:'👗',   before:'#e8e4d0', after:'#fdf4ff' },
+];
+
+(function buildDemos(){
+  const row = document.getElementById('demo-row');
+  DEMOS.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'dc';
+    card.setAttribute('role', 'listitem');
+    card.setAttribute('aria-label', `${d.label} background removal example`);
+
+    const img = document.createElement('div');
+    img.className = 'dc-img';
+
+    // After: transparent checker + emoji
+    const after = document.createElement('div');
+    after.className = 'dc-after';
+    const cvA = document.createElement('canvas');
+    cvA.width = cvA.height = 170;
+    drawEmoji(cvA, null, d.emoji);
+    after.appendChild(cvA);
+
+    // Before: solid bg + emoji
+    const before = document.createElement('div');
+    before.className = 'dc-before';
+    const cvB = document.createElement('canvas');
+    cvB.width = cvB.height = 170;
+    drawEmoji(cvB, d.before, d.emoji);
+    before.appendChild(cvB);
+
+    const div = document.createElement('div');
+    div.className = 'dc-divider';
+    div.setAttribute('aria-hidden', 'true');
+
+    img.appendChild(after);
+    img.appendChild(before);
+    img.appendChild(div);
+
+    const foot = document.createElement('div');
+    foot.className = 'dc-foot';
+    foot.innerHTML = `<span class="dc-name">${d.label}</span><span class="dc-tag">AI cut</span>`;
+
+    card.appendChild(img);
+    card.appendChild(foot);
+    card.addEventListener('click', () => document.getElementById('tool').scrollIntoView({behavior:'smooth'}));
+    row.appendChild(card);
+  });
+})();
+
+function drawEmoji(cv, bg, emoji) {
+  const ctx = cv.getContext('2d');
+  const w = cv.width, h = cv.height;
+  if (bg) { ctx.fillStyle = bg; ctx.fillRect(0,0,w,h); }
+  ctx.font = `${w * .48}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(emoji, w/2, h/2 + 3);
+}
 
 // ═══════════════════════════════════════════════════════
 // COLOUR & GRADIENT DATA
@@ -826,6 +952,7 @@ const COLORS = [
   { v:'#f5f3ff',  label:'Soft Purple' },
 ];
 
+// Gradients stored as [angle, ...stops]
 const GRADIENTS = [
   { css:'linear-gradient(135deg,#667eea 0%,#764ba2 100%)', label:'Purple Haze' },
   { css:'linear-gradient(135deg,#f093fb 0%,#f5576c 100%)', label:'Pink Dream' },
@@ -838,295 +965,112 @@ const GRADIENTS = [
   { css:'linear-gradient(135deg,#d4fc79 0%,#96e6a1 100%)', label:'Nature' },
 ];
 
-const DEMOS = [
-  { label:'Portrait',   emoji:'👩‍💼', before:'#d6e8d0', after:'#eff4ff' },
-  { label:'Product',    emoji:'👟',   before:'#e8ddd0', after:'#f0fff4' },
-  { label:'Pet',        emoji:'🐕',   before:'#d0d8e8', after:'#fff8f0' },
-  { label:'Food',       emoji:'🍓',   before:'#e8d0d6', after:'#fefce8' },
-  { label:'E-commerce', emoji:'👜',   before:'#ddd0e8', after:'#f0fffe' },
-  { label:'Fashion',    emoji:'👗',   before:'#e8e4d0', after:'#fdf4ff' },
-];
+// Build color swatches
+const cgEl = document.getElementById('color-grid');
+let activeSwatch = null;
+COLORS.forEach((c, i) => {
+  const sw = document.createElement('div');
+  sw.className = 'csw' + (c.cls ? ' '+c.cls : '');
+  if (!c.cls) sw.style.background = c.v;
+  sw.title = c.label;
+  sw.setAttribute('role', 'button');
+  sw.setAttribute('aria-label', c.label + ' background');
+  if (i === 0) { sw.classList.add('sel'); activeSwatch = sw; }
+  sw.addEventListener('click', () => {
+    setActiveSwatch(sw);
+    setBg({ type:'color', value: c.v });
+  });
+  cgEl.appendChild(sw);
+});
+
+// Custom color picker
+const cpick = document.getElementById('cpick');
+const cpickHex = document.getElementById('cpick-hex');
+cpick.addEventListener('input', e => {
+  cpickHex.textContent = e.target.value;
+  setActiveSwatch(null);
+  setBg({ type:'color', value: e.target.value });
+});
+
+function setActiveSwatch(el) {
+  document.querySelectorAll('.csw').forEach(s => s.classList.remove('sel'));
+  if (el) { el.classList.add('sel'); activeSwatch = el; }
+}
+
+// Build gradient swatches
+const ggEl = document.getElementById('grad-grid');
+let activeGrad = null;
+GRADIENTS.forEach(g => {
+  const sw = document.createElement('div');
+  sw.className = 'gsw';
+  sw.style.background = g.css;
+  sw.title = g.label;
+  sw.setAttribute('role', 'button');
+  sw.setAttribute('aria-label', g.label + ' gradient background');
+  sw.addEventListener('click', () => {
+    document.querySelectorAll('.gsw').forEach(s => s.classList.remove('sel'));
+    sw.classList.add('sel'); activeGrad = sw;
+    setBg({ type:'gradient', value: g.css });
+  });
+  ggEl.appendChild(sw);
+});
 
 // ═══════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════
-let selFile       = null;   // original File object from input
-let compressedBlob= null;   // pre-compressed blob, ready before button click
-let resBlob       = null;   // result blob from API
-let origUrl       = null;   // object URL for original image preview
-let resultImg     = null;   // HTMLImageElement of removed-bg result
-let bgImageEl     = null;   // HTMLImageElement of chosen background image
-let currentBg     = { type:'color', value:'transparent' };
+let selFile = null, resBlob = null, origUrl = null;
+let resultImg = null;       // HTMLImageElement of removed-bg result
+let bgImageEl = null;       // HTMLImageElement of chosen background image
+let currentBg = { type:'color', value:'transparent' };
 
 // ═══════════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════════
-function authH() {
-  return API_KEY ? { Authorization: 'Basic ' + btoa(':' + API_KEY) } : {};
-}
-function fmtB(b) {
-  if (b < 1024)    return b + ' B';
-  if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
-  return (b / 1048576).toFixed(2) + ' MB';
-}
+function authH() { return API_KEY ? { Authorization: 'Basic '+btoa(':'+API_KEY) } : {}; }
+function fmtB(b) { return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB'; }
 function showToast(msg) {
-  const t = document.getElementById('toast');
   document.getElementById('toast-txt').textContent = msg;
+  const t = document.getElementById('toast');
   t.classList.add('on');
   clearTimeout(t._t);
-  t._t = setTimeout(() => t.classList.remove('on'), 3200);
+  t._t = setTimeout(() => t.classList.remove('on'), 3000);
 }
-function showErr(msg) {
-  document.getElementById('err-txt').textContent = msg;
-  document.getElementById('err-wrap').classList.add('on');
-}
-function clearErr() {
-  document.getElementById('err-wrap').classList.remove('on');
-}
+function showErr(msg) { document.getElementById('err-txt').textContent = msg; document.getElementById('err-wrap').classList.add('on'); }
+function clearErr() { document.getElementById('err-wrap').classList.remove('on'); }
 
 // ═══════════════════════════════════════════════════════
-// PROGRESS BAR — pure JS, no CSS animation
-// ═══════════════════════════════════════════════════════
-const progBar  = document.getElementById('prog-bar');
-const progWrap = document.getElementById('prog-wrap');
-let _processingInterval = null;
-let _rafId = null;
-let _targetPct = 0;
-
-function _applyWidth() {
-  if (progBar) progBar.style.width = _targetPct + '%';
-  _rafId = null;
-}
-function setProgress(pct) {
-  _targetPct = Math.min(100, Math.max(0, Math.round(pct)));
-  if (!_rafId) _rafId = requestAnimationFrame(_applyWidth);
-}
-function startUploadProgress(fraction) {
-  // Upload phase: 0% → 65%
-  setProgress(fraction * 65);
-}
-function startProcessingPhase() {
-  // Slow-tick: 65% → 93% while server thinks
-  clearInterval(_processingInterval);
-  let p = 65;
-  _processingInterval = setInterval(() => {
-    if (p < 93) { p += 1; setProgress(p); }
-  }, 700);
-}
-function finishProgress() {
-  clearInterval(_processingInterval);
-  setProgress(100);
-  setTimeout(() => {
-    progWrap.classList.remove('on');
-    setProgress(0);
-  }, 500);
-}
-function resetProgress() {
-  clearInterval(_processingInterval);
-  if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; }
-  _targetPct = 0;
-  if (progBar) progBar.style.width = '0%';
-  progWrap.classList.remove('on');
-}
-
-// ═══════════════════════════════════════════════════════
-// CLIENT-SIDE COMPRESSION
-// Files ≤ 1 MB returned as-is.
-// Files > 1 MB: longest side capped to 2048 px, re-encoded
-// as JPEG at 0.82 quality. Falls back silently on any error.
-// Triggered immediately on file select so it's usually done
-// by the time the user clicks the button.
-// ═══════════════════════════════════════════════════════
-function compressBeforeUpload(file) {
-  return new Promise(resolve => {
-    // Skip tiny files
-    if (file.size <= 1 * 1024 * 1024) { resolve(file); return; }
-
-    const img = new Image();
-    img.onerror = () => resolve(file); // can't decode (e.g. HEIC on non-Safari) → send raw
-
-    img.onload = () => {
-      URL.revokeObjectURL(img.src);
-      const MAX = 2048;
-      let w = img.naturalWidth, h = img.naturalHeight;
-      if (w > MAX || h > MAX) {
-        const s = MAX / Math.max(w, h);
-        w = Math.max(1, Math.round(w * s));
-        h = Math.max(1, Math.round(h * s));
-      }
-      const cv = document.createElement('canvas');
-      cv.width = w; cv.height = h;
-      cv.getContext('2d').drawImage(img, 0, 0, w, h);
-      cv.toBlob(blob => {
-        // Only use if compression actually made it smaller
-        resolve((blob && blob.size < file.size) ? blob : file);
-      }, 'image/jpeg', 0.82);
-    };
-
-    // Use a fresh object URL so we don't re-use origUrl
-    img.src = URL.createObjectURL(file);
-  });
-}
-
-// ═══════════════════════════════════════════════════════
-// XHR UPLOAD WITH REAL PROGRESS
-// ═══════════════════════════════════════════════════════
-function doXhrUpload(fd) {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', API_BASE + '/v1/remove-background');
-    xhr.responseType = 'arraybuffer';
-    xhr.timeout = 30000; // 30 s
-
-    const h = authH();
-    Object.keys(h).forEach(k => xhr.setRequestHeader(k, h[k]));
-
-    // Throttle to ≤5 DOM updates/s (200 ms gate)
-    let lastMs = 0;
-    xhr.upload.onprogress = e => {
-      if (!e.lengthComputable) return;
-      const now = Date.now();
-      if (now - lastMs < 200) return;
-      lastMs = now;
-      startUploadProgress(e.loaded / e.total);
-    };
-
-    xhr.onload    = () => resolve(xhr);
-    xhr.onerror   = () => reject(new Error('Network error — check your connection.'));
-    xhr.ontimeout = () => reject(new Error('Request timed out (30 s). Try a smaller image or retry shortly.'));
-    xhr.send(fd);
-  });
-}
-
-// Single retry on 503/429, no retry on hard errors
-async function uploadWithRetry(fd) {
-  let xhr = await doXhrUpload(fd);
-  if (xhr.status === 503 || xhr.status === 429) {
-    const sub = document.getElementById('proc-sub');
-    const orig = sub ? sub.textContent : '';
-    if (sub) sub.textContent = 'Server busy — retrying in 3 s…';
-    await new Promise(r => setTimeout(r, 3000));
-    if (sub) sub.textContent = orig;
-    xhr = await doXhrUpload(fd);
-  }
-  return xhr;
-}
-
-// ═══════════════════════════════════════════════════════
-// FILE HANDLING — accepts ALL image/* types
-// ═══════════════════════════════════════════════════════
-function handleFile(f) {
-  if (!f) return;
-  clearErr();
-
-  // Accept any image/* MIME type. Some exotic formats (HEIC on non-Safari,
-  // AVIF on older browsers) may have an empty or application/* MIME — we
-  // still accept them and let the server validate.
-  const isImage = f.type.startsWith('image/') || f.type === '';
-  if (!isImage) {
-    showErr('Please upload an image file (JPEG, PNG, WebP, HEIC, AVIF, BMP, TIFF, GIF…)');
-    return;
-  }
-  if (f.size > MAX_FILE_BYTES) {
-    showErr('File exceeds 10 MB. Please use a smaller image.');
-    return;
-  }
-
-  selFile = f;
-  resBlob = null;
-  compressedBlob = null;
-  origUrl = URL.createObjectURL(f);
-
-  // Kick off background compression immediately
-  compressBeforeUpload(f).then(blob => {
-    compressedBlob = blob;
-    if (blob !== f) {
-      console.info('[cutmage] Pre-compressed: ' + fmtB(f.size) + ' → ' + fmtB(blob.size) +
-        ' (−' + Math.round((1 - blob.size / f.size) * 100) + '%)');
-    }
-  });
-
-  // Show image preview in dropzone
-  const dz = document.getElementById('dz');
-  dz.style.backgroundImage  = 'url(' + origUrl + ')';
-  dz.style.backgroundSize   = 'cover';
-  dz.style.backgroundPosition = 'center';
-  dz.querySelectorAll('.up-icon,.dz-h,.dz-s,.fmt-chips').forEach(el => el.style.opacity = '0');
-
-  // File badge
-  let nb = dz.querySelector('.fnb');
-  if (!nb) {
-    nb = document.createElement('div');
-    nb.className = 'fnb';
-    Object.assign(nb.style, {
-      position:'absolute', bottom:'18px', left:'50%',
-      transform:'translateX(-50%)',
-      background:'rgba(255,255,255,.92)', backdropFilter:'blur(8px)',
-      padding:'5px 16px', borderRadius:'20px',
-      fontSize:'12px', fontWeight:'600', color:'#333',
-      border:'1px solid rgba(0,0,0,.1)',
-      pointerEvents:'none', whiteSpace:'nowrap',
-      maxWidth:'85%', overflow:'hidden', textOverflow:'ellipsis', zIndex:'3'
-    });
-    dz.appendChild(nb);
-  }
-  nb.textContent = f.name + ' · ' + fmtB(f.size);
-
-  document.getElementById('btn-go').disabled = false;
-  document.getElementById('btn-clear').style.display = 'inline-flex';
-  document.getElementById('editor').classList.remove('on');
-  document.getElementById('proc').classList.remove('on');
-}
-
-// ═══════════════════════════════════════════════════════
-// RESET
-// ═══════════════════════════════════════════════════════
-function reset() {
-  selFile = null; resBlob = null; origUrl = null;
-  resultImg = null; bgImageEl = null; compressedBlob = null;
-  document.getElementById('fi').value = '';
-  document.getElementById('bg-fi').value = '';
-  const dz = document.getElementById('dz');
-  dz.style.backgroundImage = '';
-  dz.querySelectorAll('.up-icon,.dz-h,.dz-s,.fmt-chips').forEach(el => el.style.opacity = '1');
-  const nb = dz.querySelector('.fnb'); if (nb) nb.remove();
-  document.getElementById('btn-go').disabled = true;
-  document.getElementById('btn-clear').style.display = 'none';
-  resetProgress();
-  document.getElementById('proc').classList.remove('on');
-  document.getElementById('editor').classList.remove('on');
-  document.getElementById('bg-thumb').classList.remove('show');
-  clearErr();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ═══════════════════════════════════════════════════════
-// BG TYPE TABS
+// BG TYPE TABS (Color / Gradient / Image)
 // ═══════════════════════════════════════════════════════
 const bgPanes = { color:'btp-color', grad:'btp-grad', img:'btp-img' };
 const bgBtns  = { color:'btt-color', grad:'btt-grad', img:'btt-img' };
 
 function switchBgType(type) {
-  Object.entries(bgBtns).forEach(([k, id]) => {
+  Object.entries(bgBtns).forEach(([k,id]) => {
     const btn = document.getElementById(id);
-    btn.classList.toggle('active', k === type);
-    btn.setAttribute('aria-selected', k === type);
+    const active = k === type;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active);
   });
-  Object.entries(bgPanes).forEach(([k, id]) => {
+  Object.entries(bgPanes).forEach(([k,id]) => {
     document.getElementById(id).style.display = k === type ? 'block' : 'none';
   });
 }
 
+document.getElementById('btt-color').addEventListener('click', () => switchBgType('color'));
+document.getElementById('btt-grad').addEventListener('click',  () => switchBgType('grad'));
+document.getElementById('btt-img').addEventListener('click',   () => switchBgType('img'));
+
 // ═══════════════════════════════════════════════════════
-// STEP NAVIGATION
+// STEP NAVIGATION (sidebar pills)
 // ═══════════════════════════════════════════════════════
 const paneMap = { compare:'pane-compare', bg:'pane-bg', dl:'pane-dl' };
 
 function switchStep(step) {
   document.querySelectorAll('.sn').forEach(b => b.classList.toggle('active', b.dataset.step === step));
-  Object.entries(paneMap).forEach(([k, id]) => {
+  Object.entries(paneMap).forEach(([k,id]) => {
     document.getElementById(id).style.display = k === step ? 'block' : 'none';
   });
+  // Switch preview view
   if (step === 'compare') {
     showView('ba');
   } else {
@@ -1135,12 +1079,24 @@ function switchStep(step) {
   }
 }
 
+document.querySelectorAll('.sn').forEach(b => {
+  b.addEventListener('click', () => { if(resBlob) switchStep(b.dataset.step); });
+});
+document.getElementById('btn-goto-bg').addEventListener('click', () => { if(resBlob) switchStep('bg'); });
+
 // ═══════════════════════════════════════════════════════
-// PREVIEW TABS
+// PREVIEW TABS (Compare / Preview)
 // ═══════════════════════════════════════════════════════
+document.getElementById('vt-compare').addEventListener('click', () => {
+  setViewTab('compare'); showView('ba');
+});
+document.getElementById('vt-result').addEventListener('click', () => {
+  setViewTab('result'); showView('comp');
+  renderComposite(document.getElementById('comp-canvas'), false);
+});
 function setViewTab(t) {
-  document.getElementById('vt-compare').classList.toggle('active', t === 'compare');
-  document.getElementById('vt-result').classList.toggle('active', t === 'result');
+  document.getElementById('vt-compare').classList.toggle('active', t==='compare');
+  document.getElementById('vt-result').classList.toggle('active', t==='result');
 }
 function showView(v) {
   document.getElementById('view-ba').style.display   = v === 'ba'   ? 'block' : 'none';
@@ -1148,38 +1104,51 @@ function showView(v) {
 }
 
 // ═══════════════════════════════════════════════════════
-// COMPOSITE ENGINE
+// COMPOSITE ENGINE — renders to any canvas
 // ═══════════════════════════════════════════════════════
 async function renderComposite(canvas, isPreview) {
   if (!resultImg) return;
-  const W = resultImg.naturalWidth, H = resultImg.naturalHeight;
+  const W = resultImg.naturalWidth;
+  const H = resultImg.naturalHeight;
   const ratio = W / H;
+
   if (isPreview) {
+    // Small preview canvas (fixed height 68px)
     canvas.height = 68;
     canvas.width  = Math.round(68 * ratio);
   } else {
-    canvas.width = W; canvas.height = H;
+    canvas.width  = W;
+    canvas.height = H;
   }
+
   const ctx = canvas.getContext('2d');
-  const cW = canvas.width, cH = canvas.height;
+  const cW = canvas.width;
+  const cH = canvas.height;
   const spec = currentBg;
   const stage = document.getElementById('comp-stage');
+
   ctx.clearRect(0, 0, cW, cH);
+
   if (spec.type === 'color' && spec.value === 'transparent') {
+    // Transparent — show checker behind
     if (stage) stage.classList.add('checker');
     ctx.drawImage(resultImg, 0, 0, cW, cH);
     return;
   }
+
   if (stage) stage.classList.remove('checker');
+
   if (spec.type === 'color') {
     ctx.fillStyle = spec.value;
     ctx.fillRect(0, 0, cW, cH);
   } else if (spec.type === 'gradient') {
+    // Parse CSS linear-gradient reliably
     const grd = parseCSSGradient(ctx, spec.value, cW, cH);
     ctx.fillStyle = grd || '#ffffff';
     ctx.fillRect(0, 0, cW, cH);
   } else if (spec.type === 'image' && bgImageEl) {
-    const bW = bgImageEl.naturalWidth || bgImageEl.width;
+    // Cover-fit the background image
+    const bW = bgImageEl.naturalWidth  || bgImageEl.width;
     const bH = bgImageEl.naturalHeight || bgImageEl.height;
     const bRatio = bW / bH;
     let sx=0,sy=0,sw=bW,sh=bH;
@@ -1187,20 +1156,28 @@ async function renderComposite(canvas, isPreview) {
     else                { sh = bW / ratio; sy = (bH-sh)/2; }
     ctx.drawImage(bgImageEl, sx, sy, sw, sh, 0, 0, cW, cH);
   }
+
   ctx.drawImage(resultImg, 0, 0, cW, cH);
 }
 
+// Reliable CSS gradient parser → CanvasGradient
 function parseCSSGradient(ctx, css, w, h) {
+  // Match: linear-gradient(Xdeg, #hex p%, #hex p%, ...)
   const m = css.match(/linear-gradient\((\d+)deg\s*,\s*(.+)\)/);
   if (!m) return null;
   const angle = (parseInt(m[1]) - 90) * Math.PI / 180;
   const len   = Math.abs(w * Math.sin(angle)) + Math.abs(h * Math.cos(angle));
-  const x0 = w/2 - Math.cos(angle)*len/2, y0 = h/2 - Math.sin(angle)*len/2;
-  const x1 = w/2 + Math.cos(angle)*len/2, y1 = h/2 + Math.sin(angle)*len/2;
+  const x0 = w/2 - Math.cos(angle)*len/2;
+  const y0 = h/2 - Math.sin(angle)*len/2;
+  const x1 = w/2 + Math.cos(angle)*len/2;
+  const y1 = h/2 + Math.sin(angle)*len/2;
   const grd = ctx.createLinearGradient(x0, y0, x1, y1);
+  // Parse stops: "#rrggbb p%" or "#rrggbb"
+  const stopRaw = m[2];
+  const stops = [];
   const re = /(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\))\s*(\d+(?:\.\d+)?%)?/g;
-  const stops = []; let rm;
-  while ((rm = re.exec(m[2])) !== null) stops.push({ color:rm[1], pos:rm[2] });
+  let rm;
+  while ((rm = re.exec(stopRaw)) !== null) stops.push({ color: rm[1], pos: rm[2] });
   if (stops.length < 2) return null;
   stops.forEach((s, i) => {
     const pos = s.pos ? parseFloat(s.pos)/100 : i/(stops.length-1);
@@ -1209,389 +1186,263 @@ function parseCSSGradient(ctx, css, w, h) {
   return grd;
 }
 
+// ═══════════════════════════════════════════════════════
+// setBg — called when user picks any bg option
+// ═══════════════════════════════════════════════════════
 function setBg(spec) {
   currentBg = spec;
+  // Always update mini preview
   if (resultImg) {
     renderComposite(document.getElementById('prev-canvas'), true);
+    // If composite view is visible, update it too
     if (document.getElementById('view-comp').style.display !== 'none') {
       renderComposite(document.getElementById('comp-canvas'), false);
     }
   }
 }
 
+// Apply button — switch to preview view
+document.getElementById('btn-apply-bg').addEventListener('click', () => {
+  showView('comp');
+  setViewTab('result');
+  renderComposite(document.getElementById('comp-canvas'), false);
+});
+
 // ═══════════════════════════════════════════════════════
-// PROCESS — main upload + inference flow
+// BACKGROUND IMAGE UPLOAD
+// ═══════════════════════════════════════════════════════
+document.getElementById('bg-fi').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const url = URL.createObjectURL(f);
+  const thumb = document.getElementById('bg-thumb');
+  thumb.src = url; thumb.classList.add('show');
+  bgImageEl = new Image();
+  bgImageEl.src = url;
+  bgImageEl.onload = () => setBg({ type:'image', value: url });
+});
+
+// ═══════════════════════════════════════════════════════
+// FILE HANDLING
+// ═══════════════════════════════════════════════════════
+function handleFile(f) {
+  if (!f) return; clearErr();
+  if (!['image/jpeg','image/png','image/webp'].includes(f.type)) { showErr('Unsupported format. Please use JPEG, PNG, or WebP.'); return; }
+  if (f.size > 10*1024*1024) { showErr('File exceeds 10 MB. Please compress the image first.'); return; }
+  selFile = f; resBlob = null; origUrl = URL.createObjectURL(f);
+  // Show image preview in dropzone
+  const dz = document.getElementById('dz');
+  dz.style.backgroundImage = `url(${origUrl})`;
+  dz.style.backgroundSize = 'cover';
+  dz.style.backgroundPosition = 'center';
+  dz.querySelectorAll('.up-icon,.dz-h,.dz-s,.fmt-chips').forEach(el => el.style.opacity = '0');
+  // File badge
+  let nb = dz.querySelector('.fnb');
+  if (!nb) {
+    nb = document.createElement('div'); nb.className = 'fnb';
+    Object.assign(nb.style, { position:'absolute', bottom:'18px', left:'50%', transform:'translateX(-50%)', background:'rgba(255,255,255,.92)', backdropFilter:'blur(8px)', padding:'5px 16px', borderRadius:'20px', fontSize:'12px', fontWeight:'600', color:'#333', border:'1px solid rgba(0,0,0,.1)', pointerEvents:'none', whiteSpace:'nowrap', maxWidth:'85%', overflow:'hidden', textOverflow:'ellipsis', zIndex:'3' });
+    dz.appendChild(nb);
+  }
+  nb.textContent = `${f.name} · ${fmtB(f.size)}`;
+  document.getElementById('btn-go').disabled = false;
+  document.getElementById('btn-clear').style.display = 'inline-flex';
+  document.getElementById('editor').classList.remove('on');
+  document.getElementById('proc').classList.remove('on');
+}
+
+document.getElementById('fi').addEventListener('change', e => handleFile(e.target.files[0]));
+const dzEl = document.getElementById('dz');
+dzEl.addEventListener('dragover', e => { e.preventDefault(); dzEl.classList.add('dg'); });
+dzEl.addEventListener('dragleave', () => dzEl.classList.remove('dg'));
+dzEl.addEventListener('drop', e => { e.preventDefault(); dzEl.classList.remove('dg'); handleFile(e.dataTransfer.files[0]); });
+document.addEventListener('paste', e => {
+  const item = [...(e.clipboardData?.items||[])].find(i => i.type.startsWith('image/'));
+  if (item) handleFile(item.getAsFile());
+});
+
+// ═══════════════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════════════
+function reset() {
+  selFile = null; resBlob = null; origUrl = null; resultImg = null; bgImageEl = null;
+  document.getElementById('fi').value = '';
+  document.getElementById('bg-fi').value = '';
+  const dz = document.getElementById('dz');
+  dz.style.backgroundImage = '';
+  dz.querySelectorAll('.up-icon,.dz-h,.dz-s,.fmt-chips').forEach(el => el.style.opacity = '1');
+  const nb = dz.querySelector('.fnb'); if (nb) nb.remove();
+  document.getElementById('btn-go').disabled = true;
+  document.getElementById('btn-clear').style.display = 'none';
+  document.getElementById('prog-wrap').classList.remove('on');
+  document.getElementById('proc').classList.remove('on');
+  document.getElementById('editor').classList.remove('on');
+  document.getElementById('bg-thumb').classList.remove('show');
+  clearErr();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.getElementById('btn-clear').addEventListener('click', reset);
+document.getElementById('btn-new').addEventListener('click', reset);
+
+// ═══════════════════════════════════════════════════════
+// PROCESS
 // ═══════════════════════════════════════════════════════
 let stepTimers = [];
 function animSteps() {
   ['pp1','pp2','pp3'].forEach(id => document.getElementById(id).classList.remove('done'));
   stepTimers.forEach(clearTimeout);
   stepTimers = [
-    setTimeout(() => document.getElementById('pp1').classList.add('done'), 900),
-    setTimeout(() => document.getElementById('pp2').classList.add('done'), 2400),
-    setTimeout(() => document.getElementById('pp3').classList.add('done'), 4000),
+    setTimeout(() => document.getElementById('pp1').classList.add('done'), 800),
+    setTimeout(() => document.getElementById('pp2').classList.add('done'), 2100),
+    setTimeout(() => document.getElementById('pp3').classList.add('done'), 3600),
   ];
 }
 
-// ═══════════════════════════════════════════════════════
-// DOM INIT — runs after full DOM is parsed
-// (Script is at bottom of body so DOMContentLoaded is
-//  technically redundant, but kept as a safe guard)
-// ═══════════════════════════════════════════════════════
-function init() {
-
-  // ── Build demo gallery ─────────────────────────────
-  const demoRow = document.getElementById('demo-row');
-  if (demoRow) {
-    DEMOS.forEach(d => {
-      const card = document.createElement('div');
-      card.className = 'dc';
-      card.setAttribute('role', 'listitem');
-      card.setAttribute('aria-label', d.label + ' background removal example');
-
-      const imgWrap = document.createElement('div');
-      imgWrap.className = 'dc-img';
-
-      const after = document.createElement('div');
-      after.className = 'dc-after';
-      const cvA = document.createElement('canvas');
-      cvA.width = cvA.height = 170;
-      drawEmoji(cvA, null, d.emoji);
-      after.appendChild(cvA);
-
-      const before = document.createElement('div');
-      before.className = 'dc-before';
-      const cvB = document.createElement('canvas');
-      cvB.width = cvB.height = 170;
-      drawEmoji(cvB, d.before, d.emoji);
-      before.appendChild(cvB);
-
-      const divider = document.createElement('div');
-      divider.className = 'dc-divider';
-      divider.setAttribute('aria-hidden', 'true');
-
-      imgWrap.appendChild(after);
-      imgWrap.appendChild(before);
-      imgWrap.appendChild(divider);
-
-      const foot = document.createElement('div');
-      foot.className = 'dc-foot';
-      foot.innerHTML = '<span class="dc-name">' + d.label + '</span><span class="dc-tag">AI cut</span>';
-
-      card.appendChild(imgWrap);
-      card.appendChild(foot);
-      card.addEventListener('click', () => {
-        document.getElementById('tool').scrollIntoView({ behavior: 'smooth' });
-      });
-      demoRow.appendChild(card);
+document.getElementById('btn-go').addEventListener('click', async () => {
+  if (!selFile) return; clearErr();
+  document.getElementById('btn-go').disabled = true;
+  document.getElementById('prog-wrap').classList.add('on');
+  document.getElementById('proc').classList.add('on');
+  document.getElementById('editor').classList.remove('on');
+  animSteps();
+  setTimeout(() => document.getElementById('proc').scrollIntoView({behavior:'smooth',block:'center'}), 80);
+  const t0 = performance.now();
+  const fd = new FormData(); fd.append('file', selFile);
+  try {
+    const res = await fetch(`${API_BASE}/v1/remove-background`, {
+      method:'POST', headers:authH(), body:fd, signal:AbortSignal.timeout(120000)
     });
-  }
-
-  // ── Build colour swatches ──────────────────────────
-  const cgEl = document.getElementById('color-grid');
-  COLORS.forEach((c, i) => {
-    const sw = document.createElement('div');
-    sw.className = 'csw' + (c.cls ? ' ' + c.cls : '');
-    if (!c.cls) sw.style.background = c.v;
-    sw.title = c.label;
-    sw.setAttribute('role', 'button');
-    sw.setAttribute('aria-label', c.label + ' background');
-    if (i === 0) sw.classList.add('sel');
-    sw.addEventListener('click', () => {
-      document.querySelectorAll('.csw').forEach(s => s.classList.remove('sel'));
-      sw.classList.add('sel');
-      setBg({ type:'color', value: c.v });
-    });
-    cgEl.appendChild(sw);
-  });
-
-  // Custom colour picker
-  const cpick = document.getElementById('cpick');
-  const cpickHex = document.getElementById('cpick-hex');
-  cpick.addEventListener('input', e => {
-    cpickHex.textContent = e.target.value;
+    const elapsed = ((performance.now()-t0)/1000).toFixed(1);
+    if (!res.ok) { const e = await res.json().catch(()=>({detail:res.statusText})); throw new Error(e.detail||`Error ${res.status}`); }
+    resBlob = await res.blob();
+    const rUrl = URL.createObjectURL(resBlob);
+    // Load result image element
+    resultImg = new Image();
+    resultImg.src = rUrl;
+    await new Promise(r => resultImg.onload = r);
+    // Set BA
+    document.getElementById('ba-after').src = rUrl;
+    document.getElementById('ba-orig').src  = origUrl;
+    await Promise.all([
+      new Promise(r => document.getElementById('ba-after').onload = r),
+      new Promise(r => document.getElementById('ba-orig').onload  = r),
+    ]);
+    // Meta
+    document.getElementById('m-name').textContent = selFile.name.length>20 ? selFile.name.slice(0,18)+'…' : selFile.name;
+    document.getElementById('m-size').textContent = fmtB(selFile.size);
+    document.getElementById('m-time').textContent = elapsed + 's';
+    document.getElementById('m-out').textContent  = fmtB(resBlob.size) + ' PNG';
+    setSlider(.5);
+    // Reset BG to transparent
+    currentBg = { type:'color', value:'transparent' };
     document.querySelectorAll('.csw').forEach(s => s.classList.remove('sel'));
-    setBg({ type:'color', value: e.target.value });
-  });
-
-  // ── Build gradient swatches ────────────────────────
-  const ggEl = document.getElementById('grad-grid');
-  GRADIENTS.forEach(g => {
-    const sw = document.createElement('div');
-    sw.className = 'gsw';
-    sw.style.background = g.css;
-    sw.title = g.label;
-    sw.setAttribute('role', 'button');
-    sw.setAttribute('aria-label', g.label + ' gradient background');
-    sw.addEventListener('click', () => {
-      document.querySelectorAll('.gsw').forEach(s => s.classList.remove('sel'));
-      sw.classList.add('sel');
-      setBg({ type:'gradient', value: g.css });
-    });
-    ggEl.appendChild(sw);
-  });
-
-  // ── BG type tabs ───────────────────────────────────
-  document.getElementById('btt-color').addEventListener('click', () => switchBgType('color'));
-  document.getElementById('btt-grad').addEventListener('click',  () => switchBgType('grad'));
-  document.getElementById('btt-img').addEventListener('click',   () => switchBgType('img'));
-
-  // ── Step nav ───────────────────────────────────────
-  document.querySelectorAll('.sn').forEach(b => {
-    b.addEventListener('click', () => { if (resBlob) switchStep(b.dataset.step); });
-  });
-  document.getElementById('btn-goto-bg').addEventListener('click', () => { if (resBlob) switchStep('bg'); });
-
-  // ── Preview tabs ───────────────────────────────────
-  document.getElementById('vt-compare').addEventListener('click', () => { setViewTab('compare'); showView('ba'); });
-  document.getElementById('vt-result').addEventListener('click', () => {
-    setViewTab('result'); showView('comp');
-    renderComposite(document.getElementById('comp-canvas'), false);
-  });
-
-  // ── Apply bg ───────────────────────────────────────
-  document.getElementById('btn-apply-bg').addEventListener('click', () => {
-    showView('comp'); setViewTab('result');
-    renderComposite(document.getElementById('comp-canvas'), false);
-  });
-
-  // ── Background image upload ────────────────────────
-  document.getElementById('bg-fi').addEventListener('change', e => {
-    const f = e.target.files[0]; if (!f) return;
-    const url = URL.createObjectURL(f);
-    const thumb = document.getElementById('bg-thumb');
-    thumb.src = url; thumb.classList.add('show');
-    bgImageEl = new Image();
-    bgImageEl.src = url;
-    bgImageEl.onload = () => setBg({ type:'image', value: url });
-  });
-
-  // ── File input ─────────────────────────────────────
-  document.getElementById('fi').addEventListener('change', e => handleFile(e.target.files[0]));
-
-  // ── Drag & drop ────────────────────────────────────
-  const dzEl = document.getElementById('dz');
-  dzEl.addEventListener('dragover',  e => { e.preventDefault(); dzEl.classList.add('dg'); });
-  dzEl.addEventListener('dragleave', () => dzEl.classList.remove('dg'));
-  dzEl.addEventListener('drop', e => {
-    e.preventDefault(); dzEl.classList.remove('dg');
-    handleFile(e.dataTransfer.files[0]);
-  });
-
-  // ── Paste ──────────────────────────────────────────
-  document.addEventListener('paste', e => {
-    const item = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith('image/'));
-    if (item) handleFile(item.getAsFile());
-  });
-
-  // ── Reset buttons ──────────────────────────────────
-  document.getElementById('btn-clear').addEventListener('click', reset);
-  document.getElementById('btn-new').addEventListener('click', reset);
-
-  // ── Remove background button ───────────────────────
-  document.getElementById('btn-go').addEventListener('click', async () => {
-    if (!selFile) return;
-    clearErr();
-
-    document.getElementById('btn-go').disabled = true;
-    progWrap.classList.add('on');
-    setProgress(0);
-    document.getElementById('proc').classList.add('on');
-    document.getElementById('editor').classList.remove('on');
-    animSteps();
-    setTimeout(() => document.getElementById('proc').scrollIntoView({ behavior:'smooth', block:'center' }), 80);
-
-    const t0 = performance.now();
-
-    try {
-      // Use pre-compressed blob if ready, otherwise compress now
-      const blob = compressedBlob || await compressBeforeUpload(selFile);
-
-      // Build upload file with sensible name/type
-      const isJpeg = blob.type === 'image/jpeg';
-      const baseName = selFile.name.replace(/\.[^.]+$/, '');
-      const uploadName = isJpeg ? baseName + '.jpg' : selFile.name;
-      const uploadFile = new File([blob], uploadName, { type: blob.type || selFile.type });
-
-      const fd = new FormData();
-      fd.append('file', uploadFile);
-
-      // Upload (real progress 0→65%)
-      const xhr = await uploadWithRetry(fd);
-
-      // Server is running inference — tick bar 65→93%
-      startProcessingPhase();
-
-      const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
-
-      if (xhr.status < 200 || xhr.status >= 300) {
-        let detail = 'Error ' + xhr.status;
-        try {
-          const text = new TextDecoder().decode(xhr.response);
-          detail = JSON.parse(text).detail || detail;
-        } catch(_) {}
-        throw new Error(detail);
-      }
-
-      finishProgress();
-
-      resBlob = new Blob([xhr.response], { type: 'image/png' });
-      const rUrl = URL.createObjectURL(resBlob);
-
-      resultImg = new Image();
-      resultImg.src = rUrl;
-      await new Promise(r => { resultImg.onload = r; });
-
-      document.getElementById('ba-after').src = rUrl;
-      document.getElementById('ba-orig').src  = origUrl;
-      await Promise.all([
-        new Promise(r => { document.getElementById('ba-after').onload = r; }),
-        new Promise(r => { document.getElementById('ba-orig').onload  = r; }),
-      ]);
-
-      document.getElementById('m-name').textContent = selFile.name.length > 22 ? selFile.name.slice(0,20) + '…' : selFile.name;
-      document.getElementById('m-size').textContent = fmtB(selFile.size);
-      document.getElementById('m-time').textContent = elapsed + 's';
-      document.getElementById('m-out').textContent  = fmtB(resBlob.size) + ' PNG';
-
-      setSlider(0.5);
-
-      currentBg = { type:'color', value:'transparent' };
-      document.querySelectorAll('.csw').forEach(s => s.classList.remove('sel'));
-      document.querySelector('.csw-trans').classList.add('sel');
-
-      renderComposite(document.getElementById('prev-canvas'), true);
-
-      document.getElementById('proc').classList.remove('on');
-      document.getElementById('btn-go').disabled = false;
-      document.getElementById('editor').classList.add('on');
-      switchStep('compare');
-      showView('ba');
-      setViewTab('compare');
-      setTimeout(() => document.getElementById('editor').scrollIntoView({ behavior:'smooth', block:'start' }), 100);
-      showToast('Done in ' + elapsed + 's! 🎉');
-
-    } catch(err) {
-      resetProgress();
-      stepTimers.forEach(clearTimeout);
-      document.getElementById('proc').classList.remove('on');
-      document.getElementById('btn-go').disabled = false;
-
-      const isNetErr = err.name === 'TimeoutError'
-        || err.message.includes('Network error')
-        || err.message.includes('timed out');
-      showErr(isNetErr
-        ? 'Cannot reach the API (' + API_BASE + '). Check your connection or try again.'
-        : err.message);
-    }
-  });
-
-  // ── BA slider ──────────────────────────────────────
-  let drag = false;
-  function setSlider(r) {
-    r = Math.min(1, Math.max(0, r));
-    document.getElementById('ba-clip').style.width = (r * 100) + '%';
-    document.getElementById('ba-line').style.left  = (r * 100) + '%';
+    document.querySelector('.csw-trans').classList.add('sel');
+    // Render mini preview
+    renderComposite(document.getElementById('prev-canvas'), true);
+    // Show editor
+    document.getElementById('proc').classList.remove('on');
+    document.getElementById('prog-wrap').classList.remove('on');
+    document.getElementById('btn-go').disabled = false;
+    document.getElementById('editor').classList.add('on');
+    switchStep('compare');
+    showView('ba');
+    setViewTab('compare');
+    setTimeout(() => document.getElementById('editor').scrollIntoView({behavior:'smooth',block:'start'}), 100);
+    showToast(`Done in ${elapsed}s! 🎉`);
+  } catch(err) {
+    document.getElementById('proc').classList.remove('on');
+    document.getElementById('prog-wrap').classList.remove('on');
+    document.getElementById('btn-go').disabled = false;
+    stepTimers.forEach(clearTimeout);
+    const msg = (err.message.includes('fetch') || err.name==='TimeoutError')
+      ? `Cannot reach API at ${API_BASE}. Is it running?`
+      : err.message;
+    showErr(msg);
   }
-  function slRatio(e, touch) {
-    const rc = document.getElementById('baw').getBoundingClientRect();
-    const x = touch ? e.touches[0].clientX : e.clientX;
-    return (x - rc.left) / rc.width;
-  }
-  const bawEl = document.getElementById('baw');
-  bawEl.addEventListener('mousedown',  e => { drag = true; setSlider(slRatio(e)); });
-  bawEl.addEventListener('touchstart', e => { drag = true; setSlider(slRatio(e, true)); }, { passive:true });
-  window.addEventListener('mousemove',  e => { if (drag) setSlider(slRatio(e)); });
-  window.addEventListener('touchmove',  e => { if (drag) setSlider(slRatio(e, true)); }, { passive:true });
-  window.addEventListener('mouseup',   () => drag = false);
-  window.addEventListener('touchend',  () => drag = false);
-  setSlider(0.5);
+});
 
-  // ── Downloads ──────────────────────────────────────
-  async function download(format) {
-    if (!resultImg) return;
-    const cv = document.getElementById('comp-canvas');
-    await renderComposite(cv, false);
-    const name = (selFile?.name.replace(/\.[^.]+$/, '') || 'cutmage') + '_edited.' + format;
-    const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
-    const quality = format === 'jpg' ? 0.93 : undefined;
-    cv.toBlob(b => {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(b);
-      a.download = name;
-      a.click();
-      showToast('Downloaded as ' + format.toUpperCase() + '!');
-    }, mime, quality);
-  }
+// ═══════════════════════════════════════════════════════
+// BA SLIDER
+// ═══════════════════════════════════════════════════════
+let drag = false;
+function setSlider(r) {
+  r = Math.min(1, Math.max(0, r));
+  document.getElementById('ba-clip').style.width = (r*100)+'%';
+  document.getElementById('ba-line').style.left  = (r*100)+'%';
+}
+function slRatio(e, touch) {
+  const rc = document.getElementById('baw').getBoundingClientRect();
+  const x = touch ? e.touches[0].clientX : e.clientX;
+  return (x - rc.left) / rc.width;
+}
+const bawEl = document.getElementById('baw');
+bawEl.addEventListener('mousedown',  e => { drag=true; setSlider(slRatio(e)); });
+bawEl.addEventListener('touchstart', e => { drag=true; setSlider(slRatio(e,true)); }, {passive:true});
+window.addEventListener('mousemove',  e => { if(drag) setSlider(slRatio(e)); });
+window.addEventListener('touchmove',  e => { if(drag) setSlider(slRatio(e,true)); }, {passive:true});
+window.addEventListener('mouseup',   () => drag=false);
+window.addEventListener('touchend',  () => drag=false);
+setSlider(.5);
 
-  document.getElementById('btn-dl-transp').addEventListener('click', () => {
-    if (!resBlob) return;
+// ═══════════════════════════════════════════════════════
+// DOWNLOAD
+// ═══════════════════════════════════════════════════════
+async function download(format) {
+  if (!resultImg) return;
+  const cv = document.getElementById('comp-canvas');
+  await renderComposite(cv, false);
+  const name = (selFile?.name.replace(/\.[^.]+$/, '') || 'cutmage') + '_edited.' + format;
+  const mime = format==='jpg' ? 'image/jpeg' : 'image/png';
+  const quality = format==='jpg' ? 0.93 : undefined;
+  cv.toBlob(b => {
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(resBlob);
-    a.download = (selFile?.name.replace(/\.[^.]+$/, '') || 'cutmage') + '_transparent.png';
+    a.href = URL.createObjectURL(b);
+    a.download = name;
     a.click();
-    showToast('Downloading transparent PNG…');
-  });
-  document.getElementById('btn-dl-png').addEventListener('click', () => download('png'));
-  document.getElementById('btn-dl-jpg').addEventListener('click', () => download('jpg'));
-
-  // ── FAQ accordion ──────────────────────────────────
-  document.querySelectorAll('.faq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      btn.setAttribute('aria-expanded', !wasOpen);
-      if (!wasOpen) item.classList.add('open');
-    });
-  });
-
-  // ── Scroll reveal ──────────────────────────────────
-  const ioReveal = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.07 });
-  document.querySelectorAll('.rev').forEach(el => ioReveal.observe(el));
-
-  // Stagger card reveals
-  document.querySelectorAll('.how-card,.fc-card,.dc').forEach((el, i) => {
-    el.style.opacity   = '0';
-    el.style.transform = 'translateY(16px)';
-    el.style.transition = 'opacity .55s ' + (i * 0.06) + 's ease, transform .55s ' + (i * 0.06) + 's ease';
-  });
-  const ioCards = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'none';
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.how-card,.fc-card,.dc').forEach(el => ioCards.observe(el));
-
-} // end init()
-
-// ═══════════════════════════════════════════════════════
-// drawEmoji helper (used by demo gallery inside init)
-// ═══════════════════════════════════════════════════════
-function drawEmoji(cv, bg, emoji) {
-  const ctx = cv.getContext('2d');
-  const w = cv.width, h = cv.height;
-  if (bg) { ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h); }
-  ctx.font = (w * 0.48) + 'px serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(emoji, w / 2, h / 2 + 3);
+    showToast(`Downloaded as ${format.toUpperCase()}!`);
+  }, mime, quality);
 }
 
-// ── Boot ────────────────────────────────────────────────
-// Script is at bottom of <body> so the DOM is already
-// available, but DOMContentLoaded guards against edge cases
-// (e.g. deferred/async injection of this script).
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+document.getElementById('btn-dl-transp').addEventListener('click', () => {
+  if (!resBlob) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(resBlob);
+  a.download = (selFile?.name.replace(/\.[^.]+$/,'') || 'cutmage') + '_transparent.png';
+  a.click();
+  showToast('Downloading transparent PNG…');
+});
+document.getElementById('btn-dl-png').addEventListener('click', () => download('png'));
+document.getElementById('btn-dl-jpg').addEventListener('click', () => download('jpg'));
+
+// ═══════════════════════════════════════════════════════
+// FAQ ACCORDION
+// ═══════════════════════════════════════════════════════
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    btn.setAttribute('aria-expanded', !wasOpen);
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ═══════════════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════════════
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:.07 });
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+// Stagger card reveals
+document.querySelectorAll('.how-card,.fc-card,.dc').forEach((el,i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = `opacity .55s ${i*.06}s ease, transform .55s ${i*.06}s ease`;
+});
+const io2 = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; }});
+}, { threshold:.08 });
+document.querySelectorAll('.how-card,.fc-card,.dc').forEach(el => io2.observe(el));
 </script>
 </body>
 </html>
